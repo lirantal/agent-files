@@ -22,7 +22,7 @@ describe('DirectoryBubbleService', () => {
     test('should find config file in current directory', async () => {
       const currentDir = '/tmp/test-project'
       const configPath = '.vscode/mcp.json'
-      
+
       // Mock that file exists in current directory
       mockFsAccess.mock.mockImplementation((filePath: string) => {
         if (filePath === path.join(currentDir, configPath)) {
@@ -32,7 +32,7 @@ describe('DirectoryBubbleService', () => {
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       assert.strictEqual(result, path.join(currentDir, configPath))
     })
 
@@ -40,7 +40,7 @@ describe('DirectoryBubbleService', () => {
       const currentDir = '/tmp/test-project/backend/services'
       const parentDir = '/tmp/test-project'
       const configPath = '.vscode/mcp.json'
-      
+
       // Mock that file doesn't exist in current directory but exists in parent
       mockFsAccess.mock.mockImplementation((filePath: string) => {
         if (filePath === path.join(parentDir, configPath)) {
@@ -50,7 +50,7 @@ describe('DirectoryBubbleService', () => {
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       assert.strictEqual(result, path.join(parentDir, configPath))
     })
 
@@ -58,7 +58,7 @@ describe('DirectoryBubbleService', () => {
       const currentDir = '/tmp/test-project/backend/services/api'
       const grandparentDir = '/tmp/test-project'
       const configPath = '.vscode/mcp.json'
-      
+
       // Mock that file doesn't exist in current or parent but exists in grandparent
       mockFsAccess.mock.mockImplementation((filePath: string) => {
         if (filePath === path.join(grandparentDir, configPath)) {
@@ -68,7 +68,7 @@ describe('DirectoryBubbleService', () => {
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       assert.strictEqual(result, path.join(grandparentDir, configPath))
     })
 
@@ -76,28 +76,28 @@ describe('DirectoryBubbleService', () => {
       const homeDir = process.env.HOME || '/home/user'
       const currentDir = path.join(homeDir, 'projects', 'test-project', 'backend')
       const configPath = '.vscode/mcp.json'
-      
+
       // Mock that file doesn't exist anywhere
       mockFsAccess.mock.mockImplementation(() => {
         return Promise.reject(new Error('File not found'))
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       assert.strictEqual(result, null)
     })
 
     test('should stop at root directory', async () => {
       const currentDir = '/var/log/test-project/backend'
       const configPath = '.vscode/mcp.json'
-      
+
       // Mock that file doesn't exist anywhere
       mockFsAccess.mock.mockImplementation(() => {
         return Promise.reject(new Error('File not found'))
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       assert.strictEqual(result, null)
     })
 
@@ -105,7 +105,7 @@ describe('DirectoryBubbleService', () => {
       const currentDir = '/tmp/very/deeply/nested/project/structure/backend/services/api/controllers'
       const projectRoot = '/tmp/very/deeply/nested/project'
       const configPath = '.vscode/mcp.json'
-      
+
       // Mock that file exists in project root
       mockFsAccess.mock.mockImplementation((filePath: string) => {
         if (filePath === path.join(projectRoot, configPath)) {
@@ -115,7 +115,7 @@ describe('DirectoryBubbleService', () => {
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       assert.strictEqual(result, path.join(projectRoot, configPath))
     })
 
@@ -124,7 +124,7 @@ describe('DirectoryBubbleService', () => {
       const absoluteCurrentDir = path.resolve(currentDir)
       const projectRoot = path.dirname(path.dirname(path.dirname(absoluteCurrentDir)))
       const configPath = '.mcp.json'
-      
+
       // Mock that file exists in project root
       mockFsAccess.mock.mockImplementation((filePath: string) => {
         if (filePath === path.join(projectRoot, configPath)) {
@@ -134,21 +134,21 @@ describe('DirectoryBubbleService', () => {
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       assert.strictEqual(result, path.join(projectRoot, configPath))
     })
 
     test('should handle access errors silently', async () => {
       const currentDir = '/tmp/test-project'
       const configPath = '.vscode/mcp.json'
-      
+
       // Mock that fs.access throws an error
       mockFsAccess.mock.mockImplementation(() => {
         throw new Error('Permission denied')
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       // Should return null without throwing
       assert.strictEqual(result, null)
     })
@@ -156,14 +156,14 @@ describe('DirectoryBubbleService', () => {
     test('should handle non-existent start directory', async () => {
       const currentDir = '/non/existent/directory'
       const configPath = '.vscode/mcp.json'
-      
+
       // Mock that fs.access throws an error
       mockFsAccess.mock.mockImplementation(() => {
         return Promise.reject(new Error('ENOENT'))
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       assert.strictEqual(result, null)
     })
   })
@@ -172,7 +172,7 @@ describe('DirectoryBubbleService', () => {
     test('should handle circular directory references', async () => {
       const currentDir = '/tmp/test-project'
       const configPath = '.vscode/mcp.json'
-      
+
       // Mock that getParentDirectory would create a loop
       const originalGetParent = service['getParentDirectory']
       service['getParentDirectory'] = (dir: string) => {
@@ -187,20 +187,20 @@ describe('DirectoryBubbleService', () => {
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       assert.strictEqual(result, null)
     })
 
     test('should handle very short directory paths', async () => {
       const currentDir = '/a'
       const configPath = '.vscode/mcp.json'
-      
+
       mockFsAccess.mock.mockImplementation(() => {
         return Promise.reject(new Error('File not found'))
       })
 
       const result = await service.findLocalConfigInParentDirectories(configPath, currentDir)
-      
+
       assert.strictEqual(result, null)
     })
   })

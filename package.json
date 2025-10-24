@@ -34,8 +34,15 @@
   ],
   "scripts": {
     "build": "tsup",
-    "lint:markdown": "npx -y markdownlint-cli@0.45.0 -c .github/.markdownlint.yml '**/**.md' --ignore 'docs/**' --ignore 'node_modules/**'",
-    "test": "c8 node --import tsx --test __tests__/**/*.test.ts"
+    "lint": "eslint . && npm run lint:lockfile && npm run lint:markdown",
+    "lint:markdown": "npx -y markdownlint-cli@0.45.0 -c .github/.markdownlint.yml -i '.git' -i '__tests__' -i '.github' -i '.changeset' -i 'CODE_OF_CONDUCT.md' -i 'CHANGELOG.md' -i 'docs/**' -i '__template__draft_/**' -i 'node_modules' -i 'dist' -i '__template__' '**/**.md' --fix",
+    "lint:fix": "eslint . --fix",
+    "lint:lockfile": "lockfile-lint --path package-lock.json --validate-https --allowed-hosts npm yarn",
+    "test": "c8 node --import tsx --test __tests__/**/*.test.ts",
+    "test:watch": "c8 node --import tsx --test --watch __tests__/**/*.test.ts",
+    "coverage:view": "open coverage/lcov-report/index.html",
+    "version": "changeset version",
+    "release": "changeset publish"
   },
   "dependencies": {
     "jsonc-parser": "^3.3.1"

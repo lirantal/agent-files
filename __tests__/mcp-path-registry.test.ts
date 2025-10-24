@@ -13,7 +13,7 @@ describe('MCPPathRegistry', () => {
   describe('getPathsForOS', () => {
     test('should return Windows paths for win32', () => {
       const paths = registry.getPathsForOS('win32')
-      
+
       assert.ok(paths.claude)
       assert.ok(paths.vscode)
       assert.ok(paths.cursor)
@@ -23,7 +23,7 @@ describe('MCPPathRegistry', () => {
 
     test('should return Windows paths for windows', () => {
       const paths = registry.getPathsForOS('windows')
-      
+
       assert.ok(paths.claude)
       assert.ok(paths.vscode)
       assert.strictEqual(paths.claude[0].filePath, path.join(process.env.APPDATA || '', 'Claude', 'claude_desktop_config.json'))
@@ -31,7 +31,7 @@ describe('MCPPathRegistry', () => {
 
     test('should return Darwin paths for darwin', () => {
       const paths = registry.getPathsForOS('darwin')
-      
+
       assert.ok(paths.claude)
       assert.ok(paths.vscode)
       assert.strictEqual(paths.claude[0].filePath, path.join(process.env.HOME || '', 'Library', 'Application Support', 'Claude', 'claude_desktop_config.json'))
@@ -40,7 +40,7 @@ describe('MCPPathRegistry', () => {
 
     test('should return Darwin paths for macos', () => {
       const paths = registry.getPathsForOS('macos')
-      
+
       assert.ok(paths.claude)
       assert.ok(paths.vscode)
       assert.strictEqual(paths.claude[0].filePath, path.join(process.env.HOME || '', 'Library', 'Application Support', 'Claude', 'claude_desktop_config.json'))
@@ -48,7 +48,7 @@ describe('MCPPathRegistry', () => {
 
     test('should return Linux paths for linux', () => {
       const paths = registry.getPathsForOS('linux')
-      
+
       assert.ok(paths.claude)
       assert.ok(paths.vscode)
       assert.ok(paths.cursor)
@@ -66,7 +66,7 @@ describe('MCPPathRegistry', () => {
   describe('getPathsForApp', () => {
     test('should return paths for specific app on Windows', () => {
       const paths = registry.getPathsForApp('win32', 'claude')
-      
+
       assert.strictEqual(paths.length, 1)
       assert.strictEqual(paths[0].filePath, path.join(process.env.APPDATA || '', 'Claude', 'claude_desktop_config.json'))
       assert.strictEqual(paths[0].type, 'global')
@@ -74,7 +74,7 @@ describe('MCPPathRegistry', () => {
 
     test('should return paths for specific app on Darwin', () => {
       const paths = registry.getPathsForApp('darwin', 'cursor')
-      
+
       assert.strictEqual(paths.length, 2)
       assert.strictEqual(paths[0].filePath, path.join(process.env.HOME || '', '.cursor', 'mcp.json'))
       assert.strictEqual(paths[0].type, 'global')
@@ -84,7 +84,7 @@ describe('MCPPathRegistry', () => {
 
     test('should return paths for specific app on Linux', () => {
       const paths = registry.getPathsForApp('linux', 'vscode')
-      
+
       assert.strictEqual(paths.length, 6)
       assert.strictEqual(paths[0].filePath, path.join('.vscode', 'mcp.json'))
       assert.strictEqual(paths[0].type, 'local')
@@ -102,7 +102,7 @@ describe('MCPPathRegistry', () => {
   describe('getSupportedApps', () => {
     test('should return all supported apps for Windows', () => {
       const apps = registry.getSupportedApps('win32')
-      
+
       assert.ok(apps.includes('claude'))
       assert.ok(apps.includes('vscode'))
       assert.ok(apps.includes('cursor'))
@@ -117,7 +117,7 @@ describe('MCPPathRegistry', () => {
 
     test('should return all supported apps for Darwin', () => {
       const apps = registry.getSupportedApps('darwin')
-      
+
       assert.ok(apps.includes('claude'))
       assert.ok(apps.includes('vscode'))
       assert.ok(apps.includes('cursor'))
@@ -132,7 +132,7 @@ describe('MCPPathRegistry', () => {
 
     test('should return all supported apps for Linux', () => {
       const apps = registry.getSupportedApps('linux')
-      
+
       assert.ok(apps.includes('claude'))
       assert.ok(apps.includes('vscode'))
       assert.ok(apps.includes('cursor'))
@@ -149,7 +149,7 @@ describe('MCPPathRegistry', () => {
   describe('getSupportedOperatingSystems', () => {
     test('should return supported operating systems', () => {
       const osList = registry.getSupportedOperatingSystems()
-      
+
       assert.strictEqual(osList.length, 3)
       assert.ok(osList.includes('win32'))
       assert.ok(osList.includes('darwin'))
@@ -162,10 +162,10 @@ describe('MCPPathRegistry', () => {
       const customPaths = [
         { filePath: '/custom/path/config.json', type: 'global' as const }
       ]
-      
+
       registry.registerCustomApp('win32', 'custom-app', customPaths)
       const paths = registry.getPathsForOSWithCustom('win32')
-      
+
       assert.ok(paths['custom-app'])
       assert.strictEqual(paths['custom-app'].length, 1)
       assert.strictEqual(paths['custom-app'][0].filePath, '/custom/path/config.json')
@@ -176,10 +176,10 @@ describe('MCPPathRegistry', () => {
       const customPaths = [
         { filePath: '/custom/darwin/config.json', type: 'local' as const }
       ]
-      
+
       registry.registerCustomApp('darwin', 'custom-app', customPaths)
       const paths = registry.getPathsForOSWithCustom('darwin')
-      
+
       assert.ok(paths['custom-app'])
       assert.strictEqual(paths['custom-app'].length, 1)
       assert.strictEqual(paths['custom-app'][0].filePath, '/custom/darwin/config.json')
@@ -190,10 +190,10 @@ describe('MCPPathRegistry', () => {
       const customPaths = [
         { filePath: '/custom/linux/config.json', type: 'global' as const }
       ]
-      
+
       registry.registerCustomApp('linux', 'custom-app', customPaths)
       const paths = registry.getPathsForOSWithCustom('linux')
-      
+
       assert.ok(paths['custom-app'])
       assert.strictEqual(paths['custom-app'].length, 1)
       assert.strictEqual(paths['custom-app'][0].filePath, '/custom/linux/config.json')
@@ -204,7 +204,7 @@ describe('MCPPathRegistry', () => {
   describe('getPathsForOSWithCustom', () => {
     test('should return base paths when no custom apps registered', () => {
       const paths = registry.getPathsForOSWithCustom('win32')
-      
+
       assert.ok(paths.claude)
       assert.ok(paths.vscode)
       assert.strictEqual(Object.keys(paths).length, 11) // All base apps
@@ -214,10 +214,10 @@ describe('MCPPathRegistry', () => {
       const customPaths = [
         { filePath: '/custom/path/config.json', type: 'global' as const }
       ]
-      
+
       registry.registerCustomApp('win32', 'custom-app', customPaths)
       const paths = registry.getPathsForOSWithCustom('win32')
-      
+
       assert.ok(paths.claude) // Base app
       assert.ok(paths['custom-app']) // Custom app
       assert.strictEqual(Object.keys(paths).length, 12) // Base apps + custom

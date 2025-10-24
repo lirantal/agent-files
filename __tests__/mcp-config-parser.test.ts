@@ -8,9 +8,9 @@ describe('MCPConfigParser', () => {
     test('should parse valid JSON file with servers key', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/vscode-servers.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
-      
+
       assert.strictEqual(result.parsed, true)
       assert.strictEqual(result.valid, true)
       assert.ok(result.raw)
@@ -22,9 +22,9 @@ describe('MCPConfigParser', () => {
     test('should parse valid JSON file with mcpServers key', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/claude-mcpServers.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
-      
+
       assert.strictEqual(result.parsed, true)
       assert.strictEqual(result.valid, true)
       assert.ok(result.raw)
@@ -37,9 +37,9 @@ describe('MCPConfigParser', () => {
     test('should parse valid JSON file with context_servers key', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/zed-context_servers.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
-      
+
       assert.strictEqual(result.parsed, true)
       assert.strictEqual(result.valid, true)
       assert.ok(result.raw)
@@ -50,9 +50,9 @@ describe('MCPConfigParser', () => {
     test('should parse valid JSON file with mcp.servers key', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/vscode-settings-mcp.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
-      
+
       assert.strictEqual(result.parsed, true)
       assert.strictEqual(result.valid, true)
       assert.ok(result.raw)
@@ -63,9 +63,9 @@ describe('MCPConfigParser', () => {
     test('should handle config file with mcpServers key', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
-      
+
       assert.strictEqual(result.parsed, true)
       assert.strictEqual(result.valid, true)
       assert.ok(result.raw)
@@ -76,7 +76,7 @@ describe('MCPConfigParser', () => {
     test('should throw error for invalid JSON file', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/invalid-json.jsonc')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       await assert.rejects(async () => {
         await parser.parseConfigFile()
       }, /Failed to parse configuration file/)
@@ -87,9 +87,9 @@ describe('MCPConfigParser', () => {
     test('should extract servers from servers key', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/vscode-servers.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
-      
+
       assert.strictEqual(Object.keys(result.servers).length, 2)
       assert.ok(result.servers['test-server'])
       assert.ok(result.servers['another-server'])
@@ -98,9 +98,9 @@ describe('MCPConfigParser', () => {
     test('should extract servers from mcpServers key', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/claude-mcpServers.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
-      
+
       assert.strictEqual(Object.keys(result.servers).length, 3)
       assert.ok(result.servers['claude-server'])
       assert.ok(result.servers['firecrawl-mcp'])
@@ -110,9 +110,9 @@ describe('MCPConfigParser', () => {
     test('should extract servers from context_servers key', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/zed-context_servers.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
-      
+
       assert.strictEqual(Object.keys(result.servers).length, 1)
       assert.ok(result.servers['zed-server'])
     })
@@ -120,9 +120,9 @@ describe('MCPConfigParser', () => {
     test('should extract servers from mcp.servers key', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/vscode-settings-mcp.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
-      
+
       assert.strictEqual(Object.keys(result.servers).length, 1)
       assert.ok(result.servers['global-server'])
     })
@@ -130,13 +130,13 @@ describe('MCPConfigParser', () => {
     test('should handle all transport types including streamable-http', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/mixed-transport-types.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
       const servers = result.servers
-      
+
       assert.ok(servers)
       assert.strictEqual(Object.keys(servers).length, 4)
-      
+
       // Check all transport types are correctly parsed
       assert.strictEqual(servers['stdio-server'].type, 'stdio')
       assert.strictEqual(servers['sse-server'].type, 'sse')
@@ -149,13 +149,13 @@ describe('MCPConfigParser', () => {
       // which has explicit types, but we can test the inference logic separately
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/mixed-transport-types.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const result = await parser.parseConfigFile()
       const servers = result.servers
-      
+
       assert.ok(servers)
       assert.strictEqual(Object.keys(servers).length, 4)
-      
+
       // Verify that servers with explicit types are correctly parsed
       assert.strictEqual(servers['stdio-server'].type, 'stdio')
       assert.strictEqual(servers['sse-server'].type, 'sse')
@@ -165,7 +165,7 @@ describe('MCPConfigParser', () => {
 
     test('should correctly infer transport types using all inference rules', async () => {
       const parser = new MCPConfigParser('dummy-path')
-      
+
       // Test Rule 1: URL-based inference → http
       const urlServerConfig = {
         name: 'url-server',
@@ -173,7 +173,7 @@ describe('MCPConfigParser', () => {
       }
       const urlServer = parser['normalizeServerConfigs']({ 'url-server': urlServerConfig })
       assert.strictEqual(urlServer['url-server'].type, 'http', 'URL-based server should infer HTTP transport')
-      
+
       // Test Rule 2-4: Args-based inference
       const stdioArgsConfig = {
         name: 'stdio-args-server',
@@ -182,7 +182,7 @@ describe('MCPConfigParser', () => {
       }
       const stdioArgsServer = parser['normalizeServerConfigs']({ 'stdio-args-server': stdioArgsConfig })
       assert.strictEqual(stdioArgsServer['stdio-args-server'].type, 'stdio', 'Server with --stdio in args should infer stdio transport')
-      
+
       const httpArgsConfig = {
         name: 'http-args-server',
         command: 'npx',
@@ -190,7 +190,7 @@ describe('MCPConfigParser', () => {
       }
       const httpArgsServer = parser['normalizeServerConfigs']({ 'http-args-server': httpArgsConfig })
       assert.strictEqual(httpArgsServer['http-args-server'].type, 'http', 'Server with --http in args should infer HTTP transport')
-      
+
       const sseArgsConfig = {
         name: 'sse-args-server',
         command: 'npx',
@@ -198,7 +198,7 @@ describe('MCPConfigParser', () => {
       }
       const sseArgsServer = parser['normalizeServerConfigs']({ 'sse-args-server': sseArgsConfig })
       assert.strictEqual(sseArgsServer['sse-args-server'].type, 'sse', 'Server with --sse in args should infer SSE transport')
-      
+
       // Test Rule 5: Default fallback → stdio (when command is present but no other indicators)
       const defaultConfig = {
         name: 'default-server',
@@ -207,7 +207,7 @@ describe('MCPConfigParser', () => {
       }
       const defaultServer = parser['normalizeServerConfigs']({ 'default-server': defaultConfig })
       assert.strictEqual(defaultServer['default-server'].type, 'stdio', 'Server with command but no transport indicators should default to stdio')
-      
+
       // Test case with no transport indicators and no command → undefined
       const noIndicatorsConfig = {
         name: 'no-indicators-server'
@@ -215,7 +215,7 @@ describe('MCPConfigParser', () => {
       }
       const noIndicatorsServer = parser['normalizeServerConfigs']({ 'no-indicators-server': noIndicatorsConfig })
       assert.strictEqual(noIndicatorsServer['no-indicators-server'].type, undefined, 'Server with no indicators should have undefined type')
-      
+
       // Test the specific regression case that happened: nodejs-api-docs scenario
       const nodejsApiDocsConfig = {
         name: 'nodejs-api-docs',
@@ -228,7 +228,7 @@ describe('MCPConfigParser', () => {
 
     test('should respect transport inference priority (explicit type overrides inference)', async () => {
       const parser = new MCPConfigParser('dummy-path')
-      
+
       // Test that explicit type takes precedence over URL inference
       const explicitTypeWithUrlConfig = {
         name: 'explicit-http-server',
@@ -237,7 +237,7 @@ describe('MCPConfigParser', () => {
       }
       const explicitTypeWithUrlServer = parser['normalizeServerConfigs']({ 'explicit-http-server': explicitTypeWithUrlConfig })
       assert.strictEqual(explicitTypeWithUrlServer['explicit-http-server'].type, 'stdio', 'Explicit type should override URL inference')
-      
+
       // Test that explicit type takes precedence over args inference
       const explicitTypeWithArgsConfig = {
         name: 'explicit-stdio-server',
@@ -259,7 +259,7 @@ describe('MCPConfigParser', () => {
         args: ['test-mcp-server'],
         transport: 'stdio' as const
       }
-      
+
       const isValid = parser.validateServerConfig(validConfig)
       assert.strictEqual(isValid, true)
     })
@@ -272,7 +272,7 @@ describe('MCPConfigParser', () => {
         { name: 'test-server', command: 'npx', type: 'http' as const },
         { name: 'test-server', command: 'npx', type: 'streamable-http' as const }
       ]
-      
+
       for (const config of validConfigs) {
         const isValid = parser.validateServerConfig(config)
         assert.strictEqual(isValid, true, `Config with type '${config.type}' should be valid`)
@@ -286,7 +286,7 @@ describe('MCPConfigParser', () => {
         args: ['test-mcp-server'],
         transport: 'stdio' as const
       } as any
-      
+
       const isValid = parser.validateServerConfig(invalidConfig)
       assert.strictEqual(isValid, false)
     })
@@ -298,7 +298,7 @@ describe('MCPConfigParser', () => {
         args: ['test-mcp-server'],
         transport: 'stdio' as const
       } as any
-      
+
       const isValid = parser.validateServerConfig(invalidConfig)
       assert.strictEqual(isValid, false)
     })
@@ -314,7 +314,7 @@ describe('MCPConfigParser', () => {
     test('should return supported configuration keys', () => {
       const parser = new MCPConfigParser('dummy-path')
       const keys = parser.getSupportedConfigKeys()
-      
+
       assert.ok(Array.isArray(keys))
       assert.ok(keys.includes('servers'))
       assert.ok(keys.includes('mcpServers'))
@@ -326,7 +326,7 @@ describe('MCPConfigParser', () => {
     test('should return true for valid JSON file', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/vscode-servers.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const isValid = await parser.isValidSyntax()
       assert.strictEqual(isValid, true)
     })
@@ -334,7 +334,7 @@ describe('MCPConfigParser', () => {
     test('should return false for invalid JSON file', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/invalid-json.jsonc')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const isValid = await parser.isValidSyntax()
       assert.strictEqual(isValid, false)
     })
@@ -344,7 +344,7 @@ describe('MCPConfigParser', () => {
     test('should count servers in valid config file', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp-config-service/vscode-servers.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const count = await parser.countMCPServers()
       assert.strictEqual(count, 2)
     })
@@ -352,7 +352,7 @@ describe('MCPConfigParser', () => {
     test('should return 1 for config file with mcpServers', async () => {
       const fixturePath = path.resolve('__tests__/__fixtures__/mcp.json')
       const parser = new MCPConfigParser(fixturePath)
-      
+
       const count = await parser.countMCPServers()
       assert.strictEqual(count, 1)
     })
