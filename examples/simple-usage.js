@@ -1,3 +1,4 @@
+// eslint-disable n/no-missing-import
 import { DirectoryBubbleService, MCPConfigParser } from 'agent-files'
 
 async function findAndParseMCPFiles () {

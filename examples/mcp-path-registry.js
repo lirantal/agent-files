@@ -1,3 +1,4 @@
+// eslint-disable n/no-missing-import
 import { MCPPathRegistry } from 'agent-files'
 
 // Initialize the path registry
