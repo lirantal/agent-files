@@ -24,6 +24,37 @@
 - **✅ MCP Linter**: Lint and validate MCP configuration files to ensure they are well-formed.
 - **📝 MCP Parser**: Parse `mcp.json` files from different IDEs and tools.
 
+Example usage with [./examples/mcp-config-parser.js](./examples/mcp-config-parser.js):
+
+```bash
+$ node examples/mcp-config-parser.js
+
+Attempting to parse: ~/repos/agent-files/examples/mcp.json
+
+Parsed configuration result:
+{
+  "raw": {
+    "servers": [
+      {
+        "protocol": "http",
+        "port": 8080
+      }
+    ]
+  },
+  "parsed": true,
+  "valid": true,
+  "servers": {
+    "0": {
+      "name": "0",
+      "command": ""
+    }
+  }
+}
+
+Is the configuration file syntax valid? true
+Number of servers found: 1
+```
+
 ## Usage: API
 
 Install the package:
