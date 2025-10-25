@@ -1,4 +1,4 @@
-// eslint-disable n/no-missing-import
+// eslint-disable-next-line n/no-missing-import
 import { MCPConfigParser } from 'agent-files'
 import path from 'path'
 import { fileURLToPath } from 'url'
