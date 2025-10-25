@@ -1,3 +1,4 @@
+// eslint-disable-next-line n/no-missing-import
 import { DirectoryBubbleService, MCPConfigParser, MCPPathRegistry } from 'agent-files';
 import path from 'path';
 
