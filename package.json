@@ -87,7 +87,7 @@
   "publishConfig": {
     "provenance": true,
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org"
   },
   "license": "Apache-2.0",
   "c8": {
