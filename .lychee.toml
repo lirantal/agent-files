@@ -1,0 +1,2 @@
+# npmjs.com returns 403 for automated link checkers
+accept = [200, 403]
