@@ -4,7 +4,6 @@ import tseslint from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
 import pluginN from 'eslint-plugin-n'
 import pluginSecurity from 'eslint-plugin-security'
-import globals from 'globals'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
@@ -26,11 +25,7 @@ export default tseslint.config(
   {
     languageOptions: {
       ecmaVersion: 2024,
-      sourceType: 'module',
-      globals: {
-        ...globals.es2022,
-        ...globals.node
-      }
+      sourceType: 'module'
     },
     rules: {
       'no-var': 'warn',
