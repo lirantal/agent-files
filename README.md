@@ -3,6 +3,7 @@
 <p align="center"><h1 align="center">
   agent-files
 </h1>
+</p>
 
 <p align="center">
   A library that provides, detects and parses MCP (Model Context Protocol) files used by coding agents and other AI tools
