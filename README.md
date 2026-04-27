@@ -13,7 +13,7 @@
   <a href="https://www.npmjs.com/package/agent-files"><img src="https://badgen.net/npm/v/agent-files" alt="npm version"/></a>
   <a href="https://www.npmjs.com/package/agent-files"><img src="https://badgen.net/npm/license/agent-files" alt="license"/></a>
   <a href="https://www.npmjs.com/package/agent-files"><img src="https://badgen.net/npm/dt/agent-files" alt="downloads"/></a>
-  <a href="https://github.com/lirantal/agent-files/actions?workflow=CI"><img src="https://github.com/lirantal/agent-files/workflows/CI/badge.svg" alt="build"/></a>
+  <a href="https://github.com/lirantal/agent-files/actions/workflows/ci.yml"><img src="https://github.com/lirantal/agent-files/actions/workflows/ci.yml/badge.svg?branch=main" alt="build"/></a>
   <a href="https://app.codecov.io/gh/lirantal/agent-files"><img src="https://badgen.net/codecov/c/github/lirantal/agent-files" alt="codecov"/></a>
 </p>
 
