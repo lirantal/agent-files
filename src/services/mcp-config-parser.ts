@@ -228,7 +228,7 @@ export class MCPConfigParser {
       this.fileContents = await fs.readFile(this.filePath, 'utf-8')
       return this.fileContents
     } catch (error) {
-      throw new Error(`Failed to read file: ${this.filePath}`)
+      throw new Error(`Failed to read file: ${this.filePath}`, { cause: error })
     }
   }
 }
