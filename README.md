@@ -87,6 +87,10 @@ For detailed information about the project architecture and features:
 - **[Design Documentation](./docs/design.md)**: Technical design decisions and implementation details
 - **[Requirements](./docs/requirements.md)**: Functional and non-functional requirements
 
+## Contributing
+
+Please consult [CONTRIBUTING](./CONTRIBUTING.md) for guidelines on contributing to this project.
+
 ## Author
 
 **agent-files** © [Liran Tal](https://github.com/lirantal), Released under the [Apache-2.0](./LICENSE) License.
