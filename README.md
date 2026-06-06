@@ -86,6 +86,7 @@ For detailed information about the project architecture and features:
 - **[Project Overview](./docs/project.md)**: Comprehensive project analysis and architecture
 - **[Design Documentation](./docs/design.md)**: Technical design decisions and implementation details
 - **[Requirements](./docs/requirements.md)**: Functional and non-functional requirements
+- **[ESLint 10 Migration Plan](./docs/migration-eslint-10.md)**: Upgrade and migration checklist for contributors
 
 ## Contributing
 
