@@ -28,6 +28,7 @@ export class MCPConfigParser {
 
     this.parsed = true
     const fileContent = await this.getFileContent()
+    let parseError: unknown
 
     // Try parsing as standard JSON first
     try {
@@ -36,7 +37,7 @@ export class MCPConfigParser {
         this.valid = true
       }
     } catch (e) {
-      // Ignore JSON parse errors, try JSONC next
+      parseError = e
     }
 
     // Try parsing as JSONC if standard JSON failed
@@ -47,14 +48,14 @@ export class MCPConfigParser {
           this.valid = true
         }
       } catch (error) {
-        // Ignore JSONC parse errors
+        parseError = error
       }
     }
 
     // @TODO: Add support for YAML and other formats in the future
 
     if (!this.valid) {
-      throw new Error(`Failed to parse configuration file: ${this.filePath}`)
+      throw new Error(`Failed to parse configuration file: ${this.filePath}`, { cause: parseError })
     }
 
     return {
@@ -228,7 +229,7 @@ export class MCPConfigParser {
       this.fileContents = await fs.readFile(this.filePath, 'utf-8')
       return this.fileContents
     } catch (error) {
-      throw new Error(`Failed to read file: ${this.filePath}`)
+      throw new Error(`Failed to read file: ${this.filePath}`, { cause: error })
     }
   }
 }
