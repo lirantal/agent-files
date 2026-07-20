@@ -88,6 +88,10 @@ For detailed information about the project architecture and features:
 - **[Requirements](./docs/requirements.md)**: Functional and non-functional requirements
 - **[ESLint 10 Migration Plan](./docs/migration-eslint-10.md)**: Upgrade and migration checklist for contributors
 
+## Documentation
+
+- [Project documentation](./docs/README.md) - development, testing, architecture, and conventions.
+
 ## Contributing
 
 Please consult [CONTRIBUTING](./CONTRIBUTING.md) for guidelines on contributing to this project.
