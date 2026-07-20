@@ -27,6 +27,9 @@ export default defineConfig([
       'n/no-process-exit': 'warn',
       'n/no-unsupported-features': 'off',
       'n/no-unpublished-require': 'off',
+      'n/no-missing-import': ['error', {
+        typescriptExtensionMap: [['.ts', '.js'], ['.tsx', '.js']]
+      }],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       'security/detect-non-literal-fs-filename': 'off',
