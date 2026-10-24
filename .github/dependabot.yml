@@ -46,9 +46,12 @@ updates:
         dependency-type: "production"
         update-types:
         - "major"
-      # Development dependencies
+      # Development dependencies without breaking changes; major updates get individual PRs
       dev-dependencies:
         dependency-type: "development"
+        update-types:
+        - "minor"
+        - "patch"
     # example for ignoring dependencies:
     # ignore:
     #   - dependency-name: tap
