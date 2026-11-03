@@ -112,5 +112,6 @@
     "name": "Liran Tal",
     "email": "liran.tal@gmail.com",
     "url": "https://github.com/lirantal"
-  }
+  },
+  "packageManager": "npm@11.21.0"
 }
